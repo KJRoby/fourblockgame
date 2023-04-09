@@ -1,7 +1,8 @@
+# draw.py
+
 import pygame
 import constants
-import game_state
-
+from tetrimino import Tetromino
 # Draw all elements
 def draw_game(game_state, screen):
     screen.fill(constants.WHITE)
@@ -9,17 +10,19 @@ def draw_game(game_state, screen):
     draw_grid(screen)
     draw_vertical_separator(screen)
     draw_board(game_state.board, screen)
+    draw_ghost_tetromino(game_state.create_ghost_tetrimino(), screen)
     draw_tetromino(game_state.current_tetromino, screen)
-    draw_tetromino(game_state.create_ghost_tetrimino(), screen)
+    draw_piece_preview(game_state.current_queue + game_state.next_queue, screen, constants.PREVIEW_X, constants.PREVIEW_Y)
 
-# Draw Tetrimino
-def draw_tetromino(tetromino, screen):
+# Draw Tetromino
+def draw_tetromino(tetromino, screen, small=False, offsetX=0, offsetY=0):
+    grid_size = constants.GRID_SIZE // 2 if small else constants.GRID_SIZE
     for y, row in enumerate(tetromino.shape):
         for x, cell in enumerate(row):
             if cell == "X":
-                pygame.draw.rect(screen, tetromino.color, (tetromino.x * constants.GRID_SIZE + x * constants.GRID_SIZE, tetromino.y * constants.GRID_SIZE + y * constants.GRID_SIZE, constants.GRID_SIZE, constants.GRID_SIZE), 0)
-                pygame.draw.rect(screen, constants.BLACK, (tetromino.x * constants.GRID_SIZE + x * constants.GRID_SIZE, tetromino.y * constants.GRID_SIZE + y * constants.GRID_SIZE, constants.GRID_SIZE, constants.GRID_SIZE), 1)
-                
+                pygame.draw.rect(screen, tetromino.color, (tetromino.x * grid_size + x * grid_size + offsetX, tetromino.y * grid_size + y * grid_size + offsetY, grid_size, grid_size), 0)
+                pygame.draw.rect(screen, constants.BLACK, (tetromino.x * grid_size + x * grid_size + offsetX, tetromino.y * grid_size + y * grid_size + offsetY, grid_size, grid_size), 1)
+      
 # Draw Ghost Tetromino
 def draw_ghost_tetromino(tetrimino, screen):
     for row in range(len(tetrimino.shape)):
@@ -49,3 +52,9 @@ def draw_grid(screen):
 def draw_vertical_separator(screen):
     x = constants.PLAYFIELD_WIDTH
     pygame.draw.line(screen, constants.BLACK, (x, 0), (x, constants.PLAYFIELD_HEIGHT), 2)
+
+def draw_piece_preview(queue, screen, x, y):
+    for index, (shape, color) in enumerate(queue[:4]):
+        tetromino = Tetromino(shape, color, 0, 0)  # Set x and y to 0
+        draw_tetromino(tetromino, screen, small=True, offsetX=x, offsetY=y + index * 5 * constants.GRID_SIZE // 2)
+
