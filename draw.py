@@ -4,18 +4,17 @@ import game_state
 # Draw Tetromino
 
 
-
+# Draw all elements
 def draw_game(game_state, screen):
     screen.fill(constants.WHITE)
-    
+
     draw_grid(screen)
     draw_vertical_separator(screen)
     draw_board(game_state.board, screen)
     draw_tetromino(game_state.current_tetromino, screen)
     draw_tetromino(game_state.create_ghost_tetrimino(), screen)
 
-
-
+# Draw Tetrimino
 def draw_tetromino(tetromino, screen):
     for y, row in enumerate(tetromino.shape):
         for x, cell in enumerate(row):
