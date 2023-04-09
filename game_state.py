@@ -1,21 +1,27 @@
+import pygame
+import random
 import constants
 import tetrimino
-import tetris_init
 from board import add_to_board, remove_complete_lines
 from pygame.locals import *
 
 class GameState:
+    
     def __init__(self):
-        self.current_queue = tetris_init.generate_shape_queue()
-        self.next_queue = tetris_init.generate_shape_queue()
+        self.current_queue = self.generate_shape_queue()
+        self.next_queue = self.generate_shape_queue()
         self.board = [[" " for _ in range(constants.GRID_WIDTH)] for _ in range(constants.GRID_HEIGHT)]
         if not self.current_queue:
             self.current_queue = self.next_queue
-            self.next_queue = tetris_init.generate_shape_queue()
+            self.next_queue = self.generate_shape_queue()
         shape, color = self.current_queue.pop(0)
         self.current_tetromino = tetrimino.Tetromino(shape, color, constants.GRID_WIDTH // 2 - 2, 0)
         self.timer = 0
         self.game_over = False
+
+    def generate_shape_queue(self):
+        shape_queue = random.sample(constants.SHAPES_COLORS, len(constants.SHAPES_COLORS))
+        return shape_queue
 
     def create_ghost_tetrimino(self):
         ghost_tetrimino = tetrimino.Tetromino(self.current_tetromino.shape, constants.GHOST_COLOR, self.current_tetromino.x, self.current_tetromino.y)
@@ -31,13 +37,15 @@ class GameState:
 
         if not self.current_queue:
             self.current_queue = self.next_queue
-            self.next_queue = tetris_init.generate_shape_queue()
+            self.next_queue = self.generate_shape_queue()
 
         shape, color = self.current_queue.pop(0)
 
         self.current_tetromino = tetrimino.Tetromino(shape, color, constants.GRID_WIDTH // 2 - 2, 0)
         self.game_over = tetrimino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y)
 
+
+    # User Inputs
     def handle_user_input(self, event):
         if event.type == KEYDOWN:
             if event.key == K_LEFT:
@@ -63,8 +71,9 @@ class GameState:
                     if not tetrimino.check_collision(self.board, rotated_shape, self.current_tetromino.x, self.current_tetromino.y):
                         self.current_tetromino.shape = rotated_shape
 
-    def update(self):
-        self.timer += tetris_init.clock.get_time() 
+    # Update Game State
+    def update(self, clock):
+        self.timer += clock.get_time() 
         if self.timer > constants.GAME_SPEED:
             if not tetrimino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y + 1):
                 self.current_tetromino.y += 1
