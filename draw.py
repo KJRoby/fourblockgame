@@ -1,7 +1,21 @@
 import pygame
-import sys
 import constants
+import game_state
 # Draw Tetromino
+
+
+
+def draw_game(game_state, screen):
+    screen.fill(constants.WHITE)
+    
+    draw_grid(screen)
+    draw_vertical_separator(screen)
+    draw_board(game_state.board, screen)
+    draw_tetromino(game_state.current_tetromino, screen)
+    draw_tetromino(game_state.create_ghost_tetrimino(), screen)
+
+
+
 def draw_tetromino(tetromino, screen):
     for y, row in enumerate(tetromino.shape):
         for x, cell in enumerate(row):
@@ -29,10 +43,12 @@ def draw_board(board, screen):
                 pygame.draw.rect(screen, cell, (x * constants.GRID_SIZE, y * constants.GRID_SIZE, constants.GRID_SIZE, constants.GRID_SIZE), 0)
                 pygame.draw.rect(screen, constants.BLACK, (x * constants.GRID_SIZE, y * constants.GRID_SIZE, constants.GRID_SIZE, constants.GRID_SIZE), 1)
 
-# Draw Grid
 def draw_grid(screen):
-    for x in range(0, constants.WINDOW_WIDTH, constants.GRID_SIZE):
-        pygame.draw.line(screen, constants.LIGHT_GREY, (x, 0), (x, constants.WINDOW_HEIGHT))
-    for y in range(0, constants.WINDOW_HEIGHT, constants.GRID_SIZE):
-        pygame.draw.line(screen, constants.LIGHT_GREY, (0, y), (constants.WINDOW_WIDTH, y))
+    for x in range(0, constants.PLAYFIELD_WIDTH, constants.GRID_SIZE):
+        pygame.draw.line(screen, constants.LIGHT_GREY, (x, 0), (x, constants.PLAYFIELD_HEIGHT))
+    for y in range(0, constants.PLAYFIELD_HEIGHT, constants.GRID_SIZE):
+        pygame.draw.line(screen, constants.LIGHT_GREY, (0, y), (constants.PLAYFIELD_WIDTH, y))
 
+def draw_vertical_separator(screen):
+    x = constants.PLAYFIELD_WIDTH
+    pygame.draw.line(screen, constants.BLACK, (x, 0), (x, constants.PLAYFIELD_HEIGHT), 2)
