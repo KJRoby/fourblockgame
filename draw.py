@@ -1,8 +1,6 @@
 import pygame
 import constants
 import game_state
-# Draw Tetromino
-
 
 # Draw all elements
 def draw_game(game_state, screen):
