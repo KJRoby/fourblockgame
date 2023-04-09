@@ -1,4 +1,5 @@
 # tetrimino.py
+import constants
 
 # Tetromino class
 class Tetromino:
@@ -7,6 +8,11 @@ class Tetromino:
         self.color = color
         self.x = x
         self.y = y
+
+    def reset_position(self):
+        self.x = constants.GRID_WIDTH // 2 - 2
+        self.y = 0
+
 
 # Check collision
 def check_collision(board, shape, x, y):
@@ -19,5 +25,6 @@ def check_collision(board, shape, x, y):
 # Rotate shape
 def rotate(shape):
     return ["".join([shape[y][x] for y in range(len(shape))]) for x in range(len(shape[0]) - 1, -1, -1)]
+
 
 

@@ -13,6 +13,7 @@ def draw_game(game_state, screen):
     draw_ghost_tetromino(game_state.create_ghost_tetrimino(), screen)
     draw_tetromino(game_state.current_tetromino, screen)
     draw_piece_preview(game_state.current_queue + game_state.next_queue, screen, constants.PREVIEW_X, constants.PREVIEW_Y)
+    draw_held_piece(game_state, screen)
 
 # Draw Tetromino
 def draw_tetromino(tetromino, screen, small=False, offsetX=0, offsetY=0):
@@ -57,4 +58,12 @@ def draw_piece_preview(queue, screen, x, y):
     for index, (shape, color) in enumerate(queue[:4]):
         tetromino = Tetromino(shape, color, 0, 0)  # Set x and y to 0
         draw_tetromino(tetromino, screen, small=True, offsetX=x, offsetY=y + index * 5 * constants.GRID_SIZE // 2)
+
+def draw_held_piece(game_state, screen):
+    if game_state.held_piece:
+        x_offset = constants.HELD_X
+        y_offset = constants.HELD_Y
+        draw_tetromino(game_state.held_piece, screen, small=True, offsetX=x_offset, offsetY=y_offset)
+
+
 

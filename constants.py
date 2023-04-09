@@ -11,7 +11,8 @@ GRID_HEIGHT = PLAYFIELD_HEIGHT // GRID_SIZE
 GAME_SPEED = 1000
 PREVIEW_X = PLAYFIELD_WIDTH + GRID_SIZE * 2
 PREVIEW_Y = GRID_SIZE * 2
-
+HELD_X = 600
+HELD_Y = 600
 
 # Tetromino colors
 I_COLOR = (0, 255, 255)             # Cyan
@@ -22,6 +23,7 @@ S_COLOR = (0, 255, 0)               # Green
 T_COLOR = (128, 0, 128)             # Violet
 Z_COLOR = (255, 0, 0)               # Red
 GHOST_COLOR = (128, 128, 128, 77)   #Transparent Grey
+HELD_COLOR = (255, 110, 199)        #Neon Pink
 
 # Board Colors
 WHITE = (255, 255, 255)

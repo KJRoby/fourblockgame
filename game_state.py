@@ -19,6 +19,8 @@ class GameState:
         self.current_tetromino = tetrimino.Tetromino(shape, color, constants.GRID_WIDTH // 2 - 2, 0)
         self.timer = 0
         self.game_over = False
+        self.held_piece = None
+        self.swap_allowed = True
 
     def generate_shape_queue(self):
         shape_queue = random.sample(constants.SHAPES_COLORS, len(constants.SHAPES_COLORS))
@@ -44,6 +46,25 @@ class GameState:
 
         self.current_tetromino = tetrimino.Tetromino(shape, color, constants.GRID_WIDTH // 2 - 2, 0)
         self.game_over = tetrimino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y)
+        self.swap_allowed = True
+        
+    # Hold Tetromino
+    def hold_tetromino(self):
+        if not self.swap_allowed:
+            return
+
+        if self.held_piece is None:
+            self.held_piece = self.current_tetromino
+            shape, color = self.current_queue.pop(0)
+            self.current_tetromino = tetrimino.Tetromino(shape, color, constants.GRID_WIDTH // 2 - 2, 0)
+            self.held_piece.reset_position()
+        else:
+            self.held_piece, self.current_tetromino = self.current_tetromino, self.held_piece
+            self.current_tetromino.reset_position()
+            self.held_piece.reset_position()
+
+        self.swap_allowed = False
+
 
 
     # User Inputs
@@ -58,19 +79,21 @@ class GameState:
             if event.key == K_DOWN:
                 if not tetrimino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y + 1):
                     self.current_tetromino.y += 1
-            if event.key == K_UP:
+            if event.key == K_UP or event.key == K_SPACE:
                 while not tetrimino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y + 1):
                     self.current_tetromino.y += 1
                 self.reset_current_tetromino()
                 self.timer = 0
-            if event.key == K_LCTRL:
+            if event.key == K_z or event.key == K_LCTRL:
                 rotated_shape = tetrimino.rotate(self.current_tetromino.shape)
                 if not tetrimino.check_collision(self.board, rotated_shape, self.current_tetromino.x, self.current_tetromino.y):
                     self.current_tetromino.shape = rotated_shape
-                if event.key == K_z:
-                    rotated_shape = tetrimino.rotate(tetrimino.rotate(tetrimino.rotate(self.current_tetromino.shape)))
-                    if not tetrimino.check_collision(self.board, rotated_shape, self.current_tetromino.x, self.current_tetromino.y):
-                        self.current_tetromino.shape = rotated_shape
+            if event.key == K_x:
+                rotated_shape = tetrimino.rotate(tetrimino.rotate(tetrimino.rotate(self.current_tetromino.shape)))
+                if not tetrimino.check_collision(self.board, rotated_shape, self.current_tetromino.x, self.current_tetromino.y):
+                    self.current_tetromino.shape = rotated_shape
+            if event.key == K_c or event.key == K_LSHIFT:
+                self.hold_tetromino()
 
     # Update Game State
     def update(self, clock):
