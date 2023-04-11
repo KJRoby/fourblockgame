@@ -55,6 +55,9 @@ class GameState:
 
         if self.held_piece is None:
             self.held_piece = self.current_tetromino
+            if not self.current_queue:
+                self.current_queue = self.next_queue
+                self.next_queue = self.generate_shape_queue()
             shape, color = self.current_queue.pop(0)
             self.current_tetromino = tetris_tetromino.Tetromino(shape, color, tetris_constants.GRID_WIDTH // 2 - 2, 0)
             self.held_piece.reset_position()
@@ -64,8 +67,6 @@ class GameState:
             self.held_piece.reset_position()
 
         self.swap_allowed = False
-
-
 
     # User Inputs
     def handle_user_input(self, event):
