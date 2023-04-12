@@ -8,6 +8,7 @@ from pygame.locals import *
 
 class GameState:
     
+    # Initialize Game State
     def __init__(self):
         self.current_queue = self.generate_shape_queue()
         self.next_queue = self.generate_shape_queue()
@@ -22,10 +23,12 @@ class GameState:
         self.held_piece = None
         self.swap_allowed = True
 
+    # Fills a "bag" with all seven tetrominoes and then randomly selects one
     def generate_shape_queue(self):
         shape_queue = random.sample(tetris_constants.SHAPES_COLORS, len(tetris_constants.SHAPES_COLORS))
         return shape_queue
-
+    
+    # Creates a preview of where the current tetromino will land
     def create_ghost_tetrimino(self):
         ghost_tetrimino = tetris_tetromino.Tetromino(self.current_tetromino.shape, tetris_constants.GHOST_COLOR, self.current_tetromino.x, self.current_tetromino.y)
 
@@ -34,6 +37,7 @@ class GameState:
 
         return ghost_tetrimino
 
+    # Reset Current Tetromino (Done after Tetromino is placed or hard dropped)
     def reset_current_tetromino(self):
         self.board = add_to_board(self.board, self.current_tetromino)
         lines_cleared, self.board = remove_complete_lines(self.board)
@@ -48,7 +52,7 @@ class GameState:
         self.game_over = tetris_tetromino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y)
         self.swap_allowed = True
         
-    # Hold Tetromino
+    # Hold Tetromino (Done When user presses "C" or "Left Shift")
     def hold_tetromino(self):
         if not self.swap_allowed:
             return
@@ -68,7 +72,7 @@ class GameState:
 
         self.swap_allowed = False
 
-    # User Inputs
+    # User Inputs (Handles user input from keyboard)
     def handle_user_input(self, event):
         if event.type == KEYDOWN:
             if event.key == K_LEFT:
@@ -96,7 +100,7 @@ class GameState:
             if event.key == K_c or event.key == K_LSHIFT:
                 self.hold_tetromino()
 
-    # Update Game State
+    # Update Game State (Timing and Game Logic)
     def update(self, clock):
         self.timer += clock.get_time() 
         if self.timer > tetris_constants.GAME_SPEED:
