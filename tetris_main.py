@@ -27,7 +27,7 @@ def main():
             game_state.handle_user_input(event)
 
         game_state.update(clock)
-        tetris_draw.draw_game(game_state, screen)
+        tetris_draw.draw_game(game_state, screen)  
         pygame.display.flip()
         clock.tick(60)
 

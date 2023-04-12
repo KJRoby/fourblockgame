@@ -8,7 +8,7 @@ PLAYFIELD_HEIGHT = 800
 GRID_SIZE = 40
 GRID_WIDTH = PLAYFIELD_WIDTH // GRID_SIZE
 GRID_HEIGHT = PLAYFIELD_HEIGHT // GRID_SIZE
-GAME_SPEED = 1000
+GAME_SPEED = 5000
 PREVIEW_X = PLAYFIELD_WIDTH + GRID_SIZE * 2
 PREVIEW_Y = GRID_SIZE * 2
 HELD_X = 600
@@ -43,11 +43,11 @@ SHAPES_COLORS = [
         " XX ",
     ], O_COLOR, "O"),
     ([
-        "X  ",
+        "  X",
         "XXX",
     ], L_COLOR, "L"),
     ([
-        "  X",
+        "X  ",
         "XXX",
     ], J_COLOR, "J"),
     ([

@@ -86,7 +86,7 @@ class GameState:
             if event.key == K_DOWN:
                 if not tetris_tetromino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y + 1):
                     self.current_tetromino.y += 1
-            if event.key == K_UP or event.key == K_SPACE:
+            if event.key == K_SPACE:
                 while not tetris_tetromino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y + 1):
                     self.current_tetromino.y += 1
                 self.reset_current_tetromino()
@@ -95,7 +95,7 @@ class GameState:
                 rotated_tetromino = rotate_srs(self.current_tetromino, self.board, clockwise=False)
                 if rotated_tetromino is not None:
                     self.current_tetromino = rotated_tetromino
-            if event.key == K_x:
+            if event.key == K_UP:
                 rotated_tetromino = rotate_srs(self.current_tetromino, self.board, clockwise=True)
                 if rotated_tetromino is not None:
                     self.current_tetromino = rotated_tetromino
