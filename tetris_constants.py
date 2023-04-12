@@ -30,36 +30,37 @@ WHITE = (255, 255, 255)
 LIGHT_GREY = (211, 211, 211)
 BLACK = (0, 0, 0)
 
-# Tetromino shapes and their colors
+# Tetromino shapes, colors, and names
 SHAPES_COLORS = [
     ([
         "  X ",
         "  X ",
         "  X ",
         "  X ",
-    ], I_COLOR),
+    ], I_COLOR, "I"),
     ([
         " XX ",
         " XX ",
-    ], O_COLOR),
+    ], O_COLOR, "O"),
     ([
         "X  ",
         "XXX",
-    ], L_COLOR),
+    ], L_COLOR, "L"),
     ([
         "  X",
         "XXX",
-    ], J_COLOR),
+    ], J_COLOR, "J"),
     ([
         " XX",
         "XX ",
-    ], S_COLOR),
+    ], S_COLOR, "S"),
     ([
         "XX ",
         " XX",
-    ], Z_COLOR),
+    ], Z_COLOR, "Z"),
     ([
         " X ",
         "XXX",
-    ], T_COLOR),
+    ], T_COLOR, "T"),
 ]
+

@@ -3,11 +3,13 @@ import tetris_constants
 
 # Tetromino class
 class Tetromino:
-    def __init__(self, shape, color, x, y):
+    def __init__(self, shape, color, x, y, name, rotation=0):
         self.shape = shape
         self.color = color
         self.x = x
         self.y = y
+        self.name = name
+        self.rotation = rotation
 
     def reset_position(self):
         self.x = tetris_constants.GRID_WIDTH // 2 - 2
@@ -23,8 +25,12 @@ def check_collision(board, shape, x, y):
     return False
 
 # Rotate shape
-def rotate(shape):
-    return ["".join([shape[y][x] for y in range(len(shape))]) for x in range(len(shape[0]) - 1, -1, -1)]
+def rotate(shape, clockwise=True):
+    if clockwise:
+        return ["".join([shape[y][x] for y in range(len(shape)-1, -1, -1)]) for x in range(len(shape[0]))]
+    else:
+        return ["".join([shape[y][x] for y in range(len(shape))]) for x in range(len(shape[0]) - 1, -1, -1)]
+
 
 
 

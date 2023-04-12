@@ -1,4 +1,4 @@
-# draw.py
+# tetris_draw.py
 
 import pygame
 import tetris_constants
@@ -12,7 +12,7 @@ def draw_game(game_state, screen):
     draw_board(game_state.board, screen)
     draw_ghost_tetromino(game_state.create_ghost_tetrimino(), screen)
     draw_tetromino(game_state.current_tetromino, screen)
-    draw_piece_preview(game_state.current_queue + game_state.next_queue, screen, tetris_constants.PREVIEW_X, tetris_constants.PREVIEW_Y)
+    draw_piece_preview(game_state.current_queue + game_state.next_queue, screen, tetris_constants.PREVIEW_X, tetris_constants.PREVIEW_Y, game_state.current_tetromino.name)
     draw_held_piece(game_state, screen)
 
 # Draw Tetromino
@@ -54,9 +54,9 @@ def draw_vertical_separator(screen):
     x = tetris_constants.PLAYFIELD_WIDTH
     pygame.draw.line(screen, tetris_constants.BLACK, (x, 0), (x, tetris_constants.PLAYFIELD_HEIGHT), 2)
 
-def draw_piece_preview(queue, screen, x, y):
-    for index, (shape, color) in enumerate(queue[:4]):
-        tetromino = Tetromino(shape, color, 0, 0)  # Set x and y to 0
+def draw_piece_preview(queue, screen, x, y, name):
+    for index, (shape, color, name) in enumerate(queue[:4]):
+        tetromino = Tetromino(shape, color, 0, 0, name)  # Set x and y to 0
         draw_tetromino(tetromino, screen, small=True, offsetX=x, offsetY=y + index * 5 * tetris_constants.GRID_SIZE // 2)
 
 def draw_held_piece(game_state, screen):
