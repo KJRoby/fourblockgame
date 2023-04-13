@@ -5,6 +5,7 @@ import tetris_constants
 import tetris_tetromino
 from tetris_board import add_to_board, remove_complete_lines
 from pygame.locals import *
+from tetris_user_input import handle_user_input
 
 class GameState:
     
@@ -25,12 +26,12 @@ class GameState:
 
     # Fills a "bag" with all seven tetrominoes and then randomly selects one
     def generate_shape_queue(self):
-        shape_queue = random.sample(tetris_constants.SHAPES_COLORS, len(tetris_constants.SHAPES_COLORS))
+        shape_queue = random.sample(tetris_constants.TETROMINO_VARIANTS, len(tetris_constants.TETROMINO_VARIANTS))
         return shape_queue
     
     # Creates a preview of where the current tetromino will land
     def create_ghost_tetrimino(self):
-        ghost_tetrimino = tetris_tetromino.Tetromino(self.current_tetromino.shape, tetris_constants.GHOST_COLOR, self.current_tetromino.x, self.current_tetromino.y)
+        ghost_tetrimino = tetris_tetromino.Tetromino(self.current_tetromino.shape, self.current_tetromino.color, self.current_tetromino.x, self.current_tetromino.y)
 
         while not tetris_tetromino.check_collision(self.board, ghost_tetrimino.shape, ghost_tetrimino.x, ghost_tetrimino.y + 1):
             ghost_tetrimino.y += 1
@@ -52,7 +53,7 @@ class GameState:
         self.game_over = tetris_tetromino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y)
         self.swap_allowed = True
         
-    # Hold Tetromino (Done When user presses "C" or "Left Shift")
+    # Hold Tetromino (Done When user presses "Left Shift")
     def hold_tetromino(self):
         if not self.swap_allowed:
             return
@@ -72,33 +73,9 @@ class GameState:
 
         self.swap_allowed = False
 
-    # User Inputs (Handles user input from keyboard)
+    # Handle User Input
     def handle_user_input(self, event):
-        if event.type == KEYDOWN:
-            if event.key == K_LEFT:
-                if not tetris_tetromino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x - 1, self.current_tetromino.y):
-                    self.current_tetromino.x -= 1
-            if event.key == K_RIGHT:
-                if not tetris_tetromino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x + 1, self.current_tetromino.y):
-                    self.current_tetromino.x += 1
-            if event.key == K_DOWN:
-                if not tetris_tetromino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y + 1):
-                    self.current_tetromino.y += 1
-            if event.key == K_UP or event.key == K_SPACE:
-                while not tetris_tetromino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y + 1):
-                    self.current_tetromino.y += 1
-                self.reset_current_tetromino()
-                self.timer = 0
-            if event.key == K_z or event.key == K_LCTRL:
-                rotated_shape = tetris_tetromino.rotate(self.current_tetromino.shape)
-                if not tetris_tetromino.check_collision(self.board, rotated_shape, self.current_tetromino.x, self.current_tetromino.y):
-                    self.current_tetromino.shape = rotated_shape
-            if event.key == K_x:
-                rotated_shape = tetris_tetromino.rotate(tetris_tetromino.rotate(tetris_tetromino.rotate(self.current_tetromino.shape)))
-                if not tetris_tetromino.check_collision(self.board, rotated_shape, self.current_tetromino.x, self.current_tetromino.y):
-                    self.current_tetromino.shape = rotated_shape
-            if event.key == K_c or event.key == K_LSHIFT:
-                self.hold_tetromino()
+        handle_user_input(self, event)
 
     # Update Game State (Timing and Game Logic)
     def update(self, clock):

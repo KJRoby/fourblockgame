@@ -1,4 +1,4 @@
-# tetromino.py
+# tetris_tetromino.py
 import tetris_constants
 
 # Tetromino class
@@ -12,6 +12,11 @@ class Tetromino:
     def reset_position(self):
         self.x = tetris_constants.GRID_WIDTH // 2 - 2
         self.y = 0
+
+    def get_dimensions(self):
+        width = len(self.shape[0])
+        height = len(self.shape)
+        return width, height
 
 
 # Check collision

@@ -1,19 +1,45 @@
 # tetris_constants.py 
 
-# Constants
+
+
+# --Window and grid constants--
+# Window
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 800
+
+# Playfield
 PLAYFIELD_WIDTH = 400
 PLAYFIELD_HEIGHT = 800
+
+# Grid
 GRID_SIZE = 40
 GRID_WIDTH = PLAYFIELD_WIDTH // GRID_SIZE
 GRID_HEIGHT = PLAYFIELD_HEIGHT // GRID_SIZE
-GAME_SPEED = 1000
+
+# Next Piece Preview Box
 PREVIEW_X = PLAYFIELD_WIDTH + GRID_SIZE * 2
 PREVIEW_Y = GRID_SIZE * 2
-HELD_X = 600
-HELD_Y = 600
+PREVIEW_BOX_X = PREVIEW_X - GRID_SIZE // 2
+PREVIEW_BOX_Y = PREVIEW_Y - GRID_SIZE // 2
+PREVIEW_BOX_WIDTH = 5 * GRID_SIZE // 2
+PREVIEW_BOX_HEIGHT = 6 * 5 * GRID_SIZE // 2 + GRID_SIZE
+PREVIEW_BOX_BORDER = 4
 
+# Held Piece Box
+HELD_X = PREVIEW_X + PREVIEW_BOX_WIDTH + GRID_SIZE * 2
+HELD_Y = GRID_SIZE * 2
+HELD_BOX_X = HELD_X - GRID_SIZE // 2
+HELD_BOX_Y = HELD_Y - GRID_SIZE // 2
+HELD_BOX_HEIGHT = 5 * GRID_SIZE // 2
+HELD_BOX_WIDTH = 5 * GRID_SIZE // 2
+HELD_BOX_BORDER = 4
+
+
+# --Fonts--
+CAPTION_FONT_SIZE = 24
+CAPTION_FONT_COLOR = (0, 0, 0)  # Black
+
+# --Colors--
 # Tetromino colors
 I_COLOR = (0, 255, 255)             # Cyan
 J_COLOR = (0, 0, 255)               # Blue
@@ -22,44 +48,52 @@ O_COLOR = (255, 255, 0)             # Yellow
 S_COLOR = (0, 255, 0)               # Green
 T_COLOR = (128, 0, 128)             # Violet
 Z_COLOR = (255, 0, 0)               # Red
-GHOST_COLOR = (128, 128, 128, 77)   #Transparent Grey
+GHOST_COLOR = (200, 200, 200, 255)   #Transparent Grey
 HELD_COLOR = (255, 110, 199)        #Neon Pink
 
 # Board Colors
 WHITE = (255, 255, 255)
-LIGHT_GREY = (211, 211, 211)
+DARK_GREY = (50, 50, 50)
 BLACK = (0, 0, 0)
 
+#--Game constants--
+# Game speed 
+GAME_SPEED = 1000
 # Tetromino shapes and their colors
-SHAPES_COLORS = [
+TETROMINO_VARIANTS = [
     ([
-        "  X ",
-        "  X ",
-        "  X ",
-        "  X ",
+        "    ",
+        "XXXX",
+        "    ",
+        "    ",
     ], I_COLOR),
     ([
-        " XX ",
-        " XX ",
+        "XX",
+        "XX"
     ], O_COLOR),
     ([
         "X  ",
         "XXX",
-    ], L_COLOR),
+        "   ",
+    ], J_COLOR),
     ([
         "  X",
         "XXX",
-    ], J_COLOR),
+        "   ",
+    ], L_COLOR),
     ([
         " XX",
         "XX ",
+        "   ",
     ], S_COLOR),
     ([
         "XX ",
         " XX",
+        "   ",
     ], Z_COLOR),
     ([
         " X ",
         "XXX",
+        "   ",
     ], T_COLOR),
 ]
