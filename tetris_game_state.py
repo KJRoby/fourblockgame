@@ -17,8 +17,8 @@ class GameState:
         if not self.current_queue:
             self.current_queue = self.next_queue
             self.next_queue = self.generate_shape_queue()
-        shape, color = self.current_queue.pop(0)
-        self.current_tetromino = tetris_tetromino.Tetromino(shape, color, tetris_constants.GRID_WIDTH // 2 - 2, 0)
+        shape, color, name = self.current_queue.pop(0)
+        self.current_tetromino = tetris_tetromino.Tetromino(shape, color, tetris_constants.GRID_WIDTH // 2 - 2, 0, name)
         self.timer = 0
         self.game_over = False
         self.held_piece = None
@@ -31,7 +31,7 @@ class GameState:
     
     # Creates a preview of where the current tetromino will land
     def create_ghost_tetrimino(self):
-        ghost_tetrimino = tetris_tetromino.Tetromino(self.current_tetromino.shape, self.current_tetromino.color, self.current_tetromino.x, self.current_tetromino.y)
+        ghost_tetrimino = tetris_tetromino.Tetromino(self.current_tetromino.shape, self.current_tetromino.color, self.current_tetromino.x, self.current_tetromino.y, self.current_tetromino.name)
 
         while not tetris_tetromino.check_collision(self.board, ghost_tetrimino.shape, ghost_tetrimino.x, ghost_tetrimino.y + 1):
             ghost_tetrimino.y += 1
@@ -47,9 +47,9 @@ class GameState:
             self.current_queue = self.next_queue
             self.next_queue = self.generate_shape_queue()
 
-        shape, color = self.current_queue.pop(0)
+        shape, color, name = self.current_queue.pop(0)
 
-        self.current_tetromino = tetris_tetromino.Tetromino(shape, color, tetris_constants.GRID_WIDTH // 2 - 2, 0)
+        self.current_tetromino = tetris_tetromino.Tetromino(shape, color, tetris_constants.GRID_WIDTH // 2 - 2, 0, name)
         self.game_over = tetris_tetromino.check_collision(self.board, self.current_tetromino.shape, self.current_tetromino.x, self.current_tetromino.y)
         self.swap_allowed = True
         
@@ -63,8 +63,8 @@ class GameState:
             if not self.current_queue:
                 self.current_queue = self.next_queue
                 self.next_queue = self.generate_shape_queue()
-            shape, color = self.current_queue.pop(0)
-            self.current_tetromino = tetris_tetromino.Tetromino(shape, color, tetris_constants.GRID_WIDTH // 2 - 2, 0)
+            shape, color, name = self.current_queue.pop(0)
+            self.current_tetromino = tetris_tetromino.Tetromino(shape, color, tetris_constants.GRID_WIDTH // 2 - 2, 0, name)
             self.held_piece.reset_position()
         else:
             self.held_piece, self.current_tetromino = self.current_tetromino, self.held_piece

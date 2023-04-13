@@ -3,20 +3,23 @@ import tetris_constants
 
 # Tetromino class
 class Tetromino:
-    def __init__(self, shape, color, x, y):
+    def __init__(self, shape, color, x, y, name):
         self.shape = shape
         self.color = color
         self.x = x
         self.y = y
+        self.name = name
 
     def reset_position(self):
         self.x = tetris_constants.GRID_WIDTH // 2 - 2
         self.y = 0
 
-    def get_dimensions(self):
-        width = len(self.shape[0])
-        height = len(self.shape)
-        return width, height
+    def get_dimensions(self, shape=None):
+        if shape is None:
+            shape = self.shape
+        width = max(len(row) for row in shape)
+        height = len(shape)
+        return width, height    
 
 
 # Check collision

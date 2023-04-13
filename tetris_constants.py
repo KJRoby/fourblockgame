@@ -18,19 +18,19 @@ GRID_HEIGHT = PLAYFIELD_HEIGHT // GRID_SIZE
 
 # Next Piece Preview Box
 PREVIEW_X = PLAYFIELD_WIDTH + GRID_SIZE * 2
-PREVIEW_Y = GRID_SIZE * 2
+PREVIEW_Y = GRID_SIZE * 2 # 80
 PREVIEW_BOX_X = PREVIEW_X - GRID_SIZE // 2
 PREVIEW_BOX_Y = PREVIEW_Y - GRID_SIZE // 2
-PREVIEW_BOX_WIDTH = 5 * GRID_SIZE // 2
-PREVIEW_BOX_HEIGHT = 6 * 5 * GRID_SIZE // 2 + GRID_SIZE
+PREVIEW_BOX_WIDTH = 5 * GRID_SIZE // 2 # 100
+PREVIEW_BOX_HEIGHT = 6 * 5 * GRID_SIZE // 2 # 6 * 5 * 20 = 600
 PREVIEW_BOX_BORDER = 4
 
 # Held Piece Box
-HELD_X = PREVIEW_X + PREVIEW_BOX_WIDTH + GRID_SIZE * 2
-HELD_Y = GRID_SIZE * 2
-HELD_BOX_X = HELD_X - GRID_SIZE // 2
+HELD_X = PREVIEW_X + PREVIEW_BOX_WIDTH + GRID_SIZE * 2 #480 +100 + 40 = 620
+HELD_Y = GRID_SIZE * 2 # 80
+HELD_BOX_X = HELD_X - GRID_SIZE // 2 # 620 - 20 = 600
 HELD_BOX_Y = HELD_Y - GRID_SIZE // 2
-HELD_BOX_HEIGHT = 5 * GRID_SIZE // 2
+HELD_BOX_HEIGHT = 5 * GRID_SIZE // 2 # 100
 HELD_BOX_WIDTH = 5 * GRID_SIZE // 2
 HELD_BOX_BORDER = 4
 
@@ -66,34 +66,34 @@ TETROMINO_VARIANTS = [
         "XXXX",
         "    ",
         "    ",
-    ], I_COLOR),
+    ], I_COLOR, 'I'),
     ([
         "XX",
         "XX"
-    ], O_COLOR),
+    ], O_COLOR, 'O'),
     ([
         "X  ",
         "XXX",
         "   ",
-    ], J_COLOR),
+    ], J_COLOR, 'J'),
     ([
         "  X",
         "XXX",
         "   ",
-    ], L_COLOR),
+    ], L_COLOR, 'L'),
     ([
         " XX",
         "XX ",
         "   ",
-    ], S_COLOR),
+    ], S_COLOR, 'S'),
     ([
         "XX ",
         " XX",
         "   ",
-    ], Z_COLOR),
+    ], Z_COLOR, 'Z'),
     ([
         " X ",
         "XXX",
         "   ",
-    ], T_COLOR),
+    ], T_COLOR, 'T'),
 ]
