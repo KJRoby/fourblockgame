@@ -73,7 +73,7 @@ def draw_vertical_separator(screen):
     x = tetris_constants.PLAYFIELD_WIDTH
     pygame.draw.line(screen, tetris_constants.BLACK, (x, 0), (x, tetris_constants.PLAYFIELD_HEIGHT), 2)
 
-# The "Hacky" way to draw the preview box (because I can't be arsed to do the math to make it work like the held box)
+# The "Hacky" way to draw the preview pieces (because I can't be arsed to do the math to make it work like the held piece)
 def draw_piece_preview(queue, screen, x, y, name):
     for index, (shape, color, name) in enumerate(queue[:6]):
         tetromino = Tetromino(shape, color, 0, 0, name)  # Set x and y to 0
